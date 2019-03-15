@@ -60,12 +60,8 @@ before_deploy:
   - sh ci/before_deploy.sh
 
 deploy:
-  # TODO update `api_key.secure`
-  # - Create a `public_repo` GitHub token. Go to: https://github.com/settings/tokens/new
-  # - Encrypt it: `
-  # - Paste the output down here
   api_key:
-    secure: A9v3PIzQQ4U08OHFmDPQzNXbNHEb7YHyLXCvMF+dXFuNSvhUNlmQYykxqUf3dvikhJL2/bsZ14umm7ni7fQh0tGwJ4+lPpNzYAcweGgNXnWvjTpY6ovuRbr3gs4/srkyxp/GBDmSW5L8wFN3hKCB+Lm0YnIPB9IA2afP8a30+8VTXT9nv7pNqGny4ilN41ycr4DZi3sQoXdbruy7ClN7gsWW/GUiudBccHVIjmTapOFKLwZHODaUl/1/RDWQzh+i+17e1ivXuJPktDSrqmHPTZ15OjklnHKd6t179ry6VkGRg4R/R/YukVIqGzeaXGWAwdAQ5gE8cjGZghJLVi2jkDBJ85z8MvT+zLZLyliiuhLc/X8y7mkE1n0FKFtXXzFVt0l7V1LaEKbIbiV6XX3jsir4qgkqWjPHBZqO5mkGNFS16Dmt30/ZtEPAzXiINFXbWuWrpQ/LZ4NSto8IMrRTcoyDbAga/KYxJiNIeVuCe1E9dbytDM7K0GLtxJTul/WnnSeI6r//EFyC4bxYjyHhCXaag4q14KM+ak4rB0QgxsYzyGuh2MqyCoVj8YJLjLdKnL/SV7W7LPD40xlxvI6VCYTVi2ILHwL6vCxpukXYteX0c5IAIWkISDKu6nNBEgmCHXXPSqYSrgE5g7/QoCQHI8++nR8iKe0s7TWxZRydby8=
+    secure: "DAKMwqxd7aKF8tIzY2yHL8zPA4JEJDpXuEoPNvQCNtXMwjvGd9DEI1bz6wMkeMikGPhqzRVNzLBKn1s4rruT5CGNziP/JzYp5q6w2+EDuzQvS3tot492OPBG751V3Wi7aId8xsy4OBYKN/yDB4+8G7kqIQxPTpLSr+FcbyK9Ts5z/fvFBBtFYQyJwPkIp23LzH/03+f0tYYwWySLgmYKlszL/UybAoGj9xNBIFU1wzbha3E1rrgUXjxX8FBt+Mt6PRnwdfe800P/bm5e5K9y1zm8eK1XJf6yiceqAf1Pr0wEkWib2U4HKz4dAAKZZpG50fVD/Xis61dmHB69XMWIRh3E6cMnfHBySxqcGiBdzL+L2DEIFZGIUDpsFJRotm8KJgq/v0eEqjsHHzP7gQZWS9In51QfSP2bjKqx6FXfjJ0jVIVq1QL1SzYqP55hcG0m89/0KCEr5n9SdtQFaiPxhSEgIrlobbahl2Hfl8XEpG/DOb+Eb3zS+MqtsIji47D3dx1iqyfM4kw9Npsz2VLyd2k0OUdQC4GUNlZjQkufu09Ve5z5I4GzxQRQpwMfCrtaswicLlU1o65/+SJZExaw5qyDoYsvX8PCfCi/03KJdJmR49C8vmky1hTQP8HYLaCHIWa6iVJKQDhUILIaiHOEb5cYbErFdKDPXiB44mw2Nwk="
   file_glob: true
   file: $CRATE_NAME-$TRAVIS_TAG-$TARGET.*
   provider: releases
