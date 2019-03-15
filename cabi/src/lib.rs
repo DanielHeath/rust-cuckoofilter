@@ -68,10 +68,13 @@
 
 
 extern crate cuckoofilter;
+extern crate serde_json;
 
 use cuckoofilter::CuckooError;
 use std::collections::hash_map::DefaultHasher;
-
+use std::ffi::CStr;
+use std::ffi::CString;
+use std::os::raw::c_char;
 /// Opaque type for a cuckoo filter using Rust's `std::collections::hash_map::DefaultHasher` as
 /// Hasher. The C ABI only supports that specific Hasher, currently.
 #[allow(non_camel_case_types)]
@@ -181,4 +184,37 @@ pub extern "C" fn rcf_cuckoofilter_delete(filter: *mut rcf_cuckoofilter,
     } else {
         rcf_cuckoofilter_status::RCF_NOT_FOUND
     }
+}
+
+/// Exports the filter to a file
+#[no_mangle]
+pub extern "C" fn rcf_cuckoofilter_export(filter: *mut rcf_cuckoofilter) -> *mut c_char {
+    let filter = unsafe { filter.as_mut() };
+
+    // Serialize the map into a pickle stream.
+    // The second argument selects pickle version 3.
+    let serialized = serde_json::to_string(&filter.expect("Given rcf_cuckoofilter* is a null pointer").export()).unwrap();
+    CString::new(serialized).expect("JSON was not a valid c string").into_raw()
+}
+
+// Free the string from export
+#[no_mangle]
+pub extern "C" fn rcf_cuckoofilter_drop_export(str: *mut c_char) -> () {
+    let _ = unsafe {CString::from_raw(str)};
+}
+
+/// Exports the filter to a file
+#[no_mangle]
+pub extern "C" fn rcf_cuckoofilter_import(json: *const c_char) -> *mut rcf_cuckoofilter {
+    let json = unsafe {
+        CStr::from_ptr(json).to_str().expect("json to be a c string")
+    };
+    // Deserialize the pickle stream back into a map.
+    // Because we compare it to the original `map` below, Rust infers
+    // the type of `deserialized` and lets serde work its magic.
+    let parsed: cuckoofilter::ExportedCuckooFilter = serde_json::from_str(&json).unwrap();
+
+    let filter: rcf_cuckoofilter = rcf_cuckoofilter::from(parsed);
+    let filter = Box::new(filter);
+    Box::into_raw(filter)
 }
