@@ -29,4 +29,4 @@ cbindgen = "0.5"
 
 [lib]
 # foreign programs can link against cdylib or staticlib to use rust-cuckoofilter's C API
-crate-type = ["cdylib", "staticlib"]
+crate-type = ["cdylib"]
