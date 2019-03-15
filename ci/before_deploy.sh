@@ -19,6 +19,8 @@ main() {
 
     cross rustc --target $TARGET --release
 
+    find target/release
+
     cp target/release/libcuckoofilter_cabi* $stage/
 
     cd $stage
