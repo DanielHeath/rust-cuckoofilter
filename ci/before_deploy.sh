@@ -17,8 +17,7 @@ main() {
 
     test -f Cargo.lock || cargo generate-lockfile
 
-    find "${src}"
-    cd "${src}/capi"
+    cd "${src}/cabi"
 
     cross rustc --target $TARGET --release
 
